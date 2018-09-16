@@ -3,8 +3,8 @@ FROM node:8
 WORKDIR /srv
 
 COPY package.json yarn.lock ./
-RUN mkdir -p data/media
-RUN mkdir -p data/db
+RUN mkdir -p media
+RUN mkdir -p uploads
 RUN yarn
 
 COPY . .

@@ -7,20 +7,46 @@ services:
       - .env
     ports:
       - 8080:8080
+    environment:
+      - MONGO_SERVER=mongo-service
+      - MONGO_INITDB_DATABASE=test
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    networks:
+      - app_net
+    links:
+      - mongo-service
     depends_on:
-      - mongo
+      - mongo-service
       - client
     volumes:
-    - media-volume:/srv/data/media
+    - media-volume:/srv/media
+    - upload-volume:/srv/uploads
   client:
-    image: mreddy3/rescueme:1.6
+    image: mreddy3/rescueme:1.8
     tty: true
     ports:
       - 8081:80
-  mongo:
+    networks:
+      - app_net
+  mongo-service:
     image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_DATABASE=test
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
     volumes:
-    - data-volume:/srv/data/db
+    - data-volume:/data/db
+    - dataconfig-volume:/data/configdb
+    networks:
+      - app_net
+networks:
+  app_net:
+    driver: bridge
 volumes:
+  dataconfig-volume:
   data-volume:
   media-volume:
+  upload-volume:
