@@ -8,6 +8,10 @@ const url = `mongodb://${process.env.MONGO_SERVER}:27017`;
 app.use(fileUpload());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+app.get('/api/hello', (req, res) => {
+  res.send({express:'Express says hey gurl hey'});
+});
+
 app.get('/testdb', (req, res) => {
     mongodb.connect(url, (err, client) => {
         if(err) console.log(err)

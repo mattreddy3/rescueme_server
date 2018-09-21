@@ -9,6 +9,6 @@ RUN yarn
 
 COPY . .
 
-EXPOSE 8080
+EXPOSE 8080:80
 
 CMD node index.js
