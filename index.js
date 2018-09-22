@@ -9,10 +9,10 @@ app.use(fileUpload());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.get('/api/hello', (req, res) => {
-  res.send({express:'Express says hey gurl hey'});
+  res.status(200).send({express:'Express says hey gurl hey'});
 });
 
-app.get('/testdb', (req, res) => {
+app.get('/api/testdb', (req, res) => {
     mongodb.connect(url, (err, client) => {
         if(err) console.log(err)
         else{
